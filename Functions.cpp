@@ -47,7 +47,11 @@ bool EadorConfigEditorFrame::LoadConfig()
                 newRecord.name = it->second.name;
                 newRecord.description = it->second.description;
             }
-            else newRecord.name = newRecord.key;
+            else
+            {
+                //wxMessageBox("not found "+newRecord.key);
+                newRecord.name = newRecord.key;
+            }
             gConfig[gConfig.size()-1].value.push_back(newRecord);
             //wxMessageBox("key = "+str.Mid(0,pos)+" value = "+str.Mid(pos+1));
         }
@@ -75,6 +79,7 @@ bool EadorConfigEditorFrame::LoadConfig()
             StatusedStaticText* newText = new StatusedStaticText(newPanel, wxNewId(), gConfig[i].value[j].name, wxDefaultPosition, wxDefaultSize, 0, "");
             newText->SetStatus(gConfig[i].value[j].key);
             newText->Connect(wxEVT_ENTER_WINDOW,(wxObjectEventFunction)&StatusedStaticText::OnMouseEnter);
+            newText->Connect(wxEVT_LEAVE_WINDOW,(wxObjectEventFunction)&StatusedStaticText::OnMouseLeave);
 
             newText->SetToolTip(gConfig[i].value[j].description);
             newText->GetToolTip()->SetAutoPop(20000);
@@ -84,7 +89,10 @@ bool EadorConfigEditorFrame::LoadConfig()
             wxIntegerValidator<int> val(&gConfig[i].value[j].value, wxNUM_VAL_THOUSANDS_SEPARATOR);
             //wxIntegerValidator<int>* val = new wxIntegerValidator<int>(&gConfig[i].value[j].value, wxNUM_VAL_THOUSANDS_SEPARATOR);
             long ctrlID = wxNewId();
-            wxTextCtrl* newControl = new wxTextCtrl(newPanel, ctrlID, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, val, "");
+            StatusedTextCtrl* newControl = new StatusedTextCtrl(newPanel, ctrlID, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, val, "");
+            newControl->SetStatus(gConfig[i].value[j].key);
+            newControl->Connect(wxEVT_ENTER_WINDOW,(wxObjectEventFunction)&StatusedTextCtrl::OnMouseEnter);
+            newControl->Connect(wxEVT_LEAVE_WINDOW,(wxObjectEventFunction)&StatusedTextCtrl::OnMouseLeave);
             //newControl->SetHeplText("Hint");
 
             //wxTextCtrl* newControl = new wxTextCtrl(newPanel, wxNewId(), wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, "");
@@ -206,7 +214,7 @@ void EadorConfigEditorFrame::LoadRussian()
     russianLang["Lake ships (0 - off/1 - on, default 0)"].name               = "Корабли в озёрах (0 - нет/1 - да, по умолчанию 0)";
     russianLang["Manual guard control (0 - off/1 - on, default 0)"].name     = "Ручное управление стражей (0 - нет/1 - да, по умолчанию 0)";
     russianLang["Skip tutorial (0 - off/1 - on, default 0)"].name            = "Пропустить обучение (0 - нет/1 - да, по умолчанию 0)";
-    russianLang["Сhoice of basic skill (0 - off/1 - on, default 0)"].name    = "Выбор начального навыка (0 - нет/1 - да, по умолчанию 0)";
+    russianLang["Choice of basic skill (0 - off/1 - on, default 0)"].name    = "Выбор начального навыка (0 - нет/1 - да, по умолчанию 0)";
     russianLang["Animation (0 - off/1 - on, default 1)"].name                = "Анимация (0 - нет/1 - да, по умолчанию 1)";
 
 //------------------------------------------- DESCRIPTION -------------------------------------------------
@@ -243,7 +251,7 @@ void EadorConfigEditorFrame::LoadRussian()
     russianLang["Lake ships (0 - off/1 - on, default 0)"].description               = "Если включено, то можно ставить верфи в провинциях рядом с озёрами (вода, не касающаяся границ карты)";
     russianLang["Manual guard control (0 - off/1 - on, default 0)"].description     = "Если включено, то при нападении на стражу появится вариант управления стражей вручную";
     russianLang["Skip tutorial (0 - off/1 - on, default 0)"].description            = "Пропустить обучение при старте новой кампании";
-    russianLang["Сhoice of basic skill (0 - off/1 - on, default 0)"].description    = "Если включено, то при найме нового героя можно выбрать стартовый навык";
+    russianLang["Choice of basic skill (0 - off/1 - on, default 0)"].description    = "Если включено, то при найме нового героя можно выбрать стартовый навык";
     russianLang["Animation (0 - off/1 - on, default 1)"].description                = "Если включено, то в бою у некоторых эффектов появляется дополнительная анимация";
 
 }

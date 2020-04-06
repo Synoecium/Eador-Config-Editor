@@ -75,6 +75,25 @@ public:
     }
     void SetStatus(wxString newStatus){m_status = newStatus;};
     void OnMouseEnter(wxMouseEvent& event);
+    void OnMouseLeave(wxMouseEvent& event);
+
+private:
+    wxString m_status;
+
+};
+
+class StatusedTextCtrl : public wxTextCtrl
+{
+public:
+    StatusedTextCtrl(wxWindow *parent, wxWindowID id, const wxString &value, const wxPoint &pos=wxDefaultPosition,
+                       const wxSize &size=wxDefaultSize, long style=0, const wxValidator &validator=wxDefaultValidator, const wxString &name=wxTextCtrlNameStr)
+                       : wxTextCtrl(parent, id, value, pos, size, style, validator, name)
+    {
+
+    }
+    void SetStatus(wxString newStatus){m_status = newStatus;};
+    void OnMouseEnter(wxMouseEvent& event);
+    void OnMouseLeave(wxMouseEvent& event);
 
 private:
     wxString m_status;
@@ -98,7 +117,7 @@ class EadorConfigEditorFrame: public wxFrame
         void LoadRussian();
         void OnTextCtrlAnyText(wxCommandEvent& event);
         wxString formTitle = "Eador config editor";
-        wxString gVersion = "1.1";
+        wxString gVersion = "1.2";
         std::map<wxString,tTranslate> russianLang;
 
     private:
@@ -108,7 +127,6 @@ class EadorConfigEditorFrame: public wxFrame
         void OnAbout(wxCommandEvent& event);
         void OnClose(wxCloseEvent& event);
         void OnSave(wxCommandEvent& event);
-        void OnMouseEnter(wxMouseEvent& event);
         //*)
 
         //(*Identifiers(EadorConfigEditorFrame)

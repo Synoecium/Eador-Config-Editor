@@ -160,13 +160,22 @@ void EadorConfigEditorFrame::OnSave(wxCommandEvent& event)
     SetTitle(formTitle);
 }
 
-void EadorConfigEditorFrame::OnMouseEnter(wxMouseEvent& event)
-{
-
-    pFrame->SetStatusText("OnTextMouse");
-}
-
 void StatusedStaticText::OnMouseEnter(wxMouseEvent& event)
 {
      pFrame->SetStatusText(m_status);
+};
+
+void StatusedStaticText::OnMouseLeave(wxMouseEvent& event)
+{
+     pFrame->SetStatusText("");
+};
+
+void StatusedTextCtrl::OnMouseEnter(wxMouseEvent& event)
+{
+     pFrame->SetStatusText(m_status);
+};
+
+void StatusedTextCtrl::OnMouseLeave(wxMouseEvent& event)
+{
+     pFrame->SetStatusText("");
 };
